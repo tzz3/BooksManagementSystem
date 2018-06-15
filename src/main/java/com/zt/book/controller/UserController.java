@@ -27,7 +27,7 @@ public class UserController {
         User u = userService.login(user);
 
         if (u != null) {//重定向 redirect:
-            request.getSession().setAttribute("user", u);
+            request.getSession().setAttribute("u", u);
             mav.setViewName("/index.jsp");
         } else {
             mav.addObject("msg", "用户名或者密码错误");

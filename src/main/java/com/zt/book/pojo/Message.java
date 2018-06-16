@@ -1,0 +1,17 @@
+package com.zt.book.pojo;
+
+/**
+ * @author tzz
+ */
+public class Message {
+    private String msg;
+
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+}

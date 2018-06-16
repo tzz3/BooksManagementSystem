@@ -90,16 +90,27 @@
             });
 
             //提交事件
+            $(".submit").click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "${pageContext.request.contextPath}/kinds/addKind",
+                    datatype: "json",
+                    data: $('#form').serialize(),
+                    success: function (data) {
+                        alert(data.msg);
+                    },
+                    error: function (data) {
+                        alert(data.msg);
+                    }
 
-
+                })
+            });
         }
     });
 
     /*更新按钮*/
     $(".update").click(function () {
         /*获取我们对应的 id  type  */
-
-
         if ($(".box").css("display") === 'none') {
 
             $(".box").css({
@@ -118,7 +129,16 @@
             });
 
             //先给前端修改页面显示：修改数据($().val())
-
+            $(".submit").click(function () {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/kinds/updateKind",
+                    data: "id =" + $(".add").parents("tr").find("td").eq(0).html,
+                    datatype: "json",
+                    success: function (data) {
+                        alert(data.msg);
+                    }
+                })
+            });
 
         }
         //修改按钮

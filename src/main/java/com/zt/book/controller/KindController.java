@@ -38,7 +38,11 @@ public class KindController {
 
     @RequestMapping("/updateKind")
     @ResponseBody
-    public Message updateKind(Kind kind) {
+    public Message updateKind(String id,String type) {
+        Kind kind = new Kind();
+        kind.setId(id);
+        kind.setType(type);
+        System.out.println(kind.toString());
         return kindService.updateKind(kind);
     }
 }

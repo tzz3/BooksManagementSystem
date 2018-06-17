@@ -12,5 +12,5 @@ public interface KindDao {
 
     void addKind(Kind kind);
 
-    int updateKind(Kind kind);
+    void updateKind(Kind kind);
 }

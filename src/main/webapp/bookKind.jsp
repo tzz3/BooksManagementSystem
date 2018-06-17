@@ -102,7 +102,6 @@
                     error: function (data) {
                         alert(data.msg);
                     }
-
                 })
             });
         }
@@ -111,6 +110,9 @@
     /*更新按钮*/
     $(".update").click(function () {
         /*获取我们对应的 id  type  */
+        var id = $(this).parents("tr").find("td").eq(0).text();
+        id = id.substr(0, 4);
+
         if ($(".box").css("display") === 'none') {
 
             $(".box").css({
@@ -130,20 +132,24 @@
 
             //先给前端修改页面显示：修改数据($().val())
             $(".submit").click(function () {
+                //获取type
+                var type = document.getElementById("type").value;
+
                 $.ajax({
                     url: "${pageContext.request.contextPath}/kinds/updateKind",
-                    data: "id =" + $(".add").parents("tr").find("td").eq(0).html,
+                    data: {"id": id, "type": type},
                     datatype: "json",
                     success: function (data) {
                         alert(data.msg);
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert(data.msg);
+                        location.reload();
                     }
                 })
             });
-
         }
-        //修改按钮
-
-
     })
     /*删除按钮*/
 

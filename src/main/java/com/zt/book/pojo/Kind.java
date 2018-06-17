@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * 图书种类实体
+ *
  * @author tzz
  */
 @Entity
@@ -46,5 +47,14 @@ public class Kind implements Serializable {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Kind{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", books=" + books +
+                '}';
     }
 }

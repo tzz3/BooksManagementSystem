@@ -54,12 +54,15 @@ public class KindServiceImpl implements KindService {
     public Message updateKind(Kind kind) {
         Message msg = new Message();
         try {
-            Kind k = kindDao.findByType(kind.getType());
-            kind.setId(k.getId());
-            if (kindDao.updateKind(kind) == 1) {
+            if (!(kind.getType().equals("") || kind.getType() == null)) {
+                if (kindDao.findByType(kind.getType()) != null) {
+                    msg.setMsg("此分类已存在");
+                    return msg;
+                }
+                kindDao.updateKind(kind);
                 msg.setMsg("更新成功");
             } else {
-                msg.setMsg("更新失败");
+                msg.setMsg("必须输入类型名字");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -138,7 +138,9 @@
                 $.ajax({
                     url: "${pageContext.request.contextPath}/kinds/updateKind",
                     data: {"id": id, "type": type},
-                    datatype: "json",
+                    dataType: "json",
+                    async: false,
+                    cache: false,
                     success: function (data) {
                         alert(data.msg);
                         location.reload();

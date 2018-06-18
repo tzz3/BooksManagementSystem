@@ -152,8 +152,28 @@
                 })
             });
         }
-    })
+    });
+
     /*删除按钮*/
+    $(".delete").click(function () {
+        //获取id
+        var id = $(this).parents("tr").find("td").eq(0).text().substr(0, 4);
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/kinds/deleteKind",
+            data: {"id": id},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                alert(data.msg);
+                location.reload();
+            },
+            error: function (data) {
+                alert(data.msg);
+                location.reload();
+            }
+        });
+    });
 
 
 </script>

@@ -13,4 +13,6 @@ public interface KindService {
     Message addKind(Kind kind);
 
     Message updateKind(Kind kind);
+
+    Message deleteKind(Kind kind);
 }

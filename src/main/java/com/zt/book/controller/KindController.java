@@ -45,4 +45,12 @@ public class KindController {
         System.out.println(kind.toString());
         return kindService.updateKind(kind);
     }
+
+    @RequestMapping("/deleteKind")
+    @ResponseBody
+    public Message deleteKind(String id){
+        Kind kind = new Kind();
+        kind.setId(id);
+        return kindService.deleteKind(kind);
+    }
 }

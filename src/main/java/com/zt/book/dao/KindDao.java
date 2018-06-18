@@ -13,4 +13,6 @@ public interface KindDao {
     void addKind(Kind kind);
 
     void updateKind(Kind kind);
+
+    void deleteKind(Kind kind);
 }

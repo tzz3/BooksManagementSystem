@@ -70,4 +70,17 @@ public class KindServiceImpl implements KindService {
         }
         return msg;
     }
+
+    @Override
+    public Message deleteKind(Kind kind) {
+        Message msg = new Message();
+        try {
+            kindDao.deleteKind(kind);
+            msg.setMsg("删除成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            msg.setMsg("系统异常");
+        }
+        return msg;
+    }
 }

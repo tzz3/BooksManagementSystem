@@ -4,8 +4,9 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="1">
+          <list size="2">
             <item index="0" class="java.lang.String" itemvalue="charset" />
+            <item index="1" class="java.lang.String" itemvalue="placeholder" />
           </list>
         </value>
       </option>
@@ -40,7 +41,7 @@
       <option name="IGNORE_JAVADOC_PERIOD" value="true" />
       <option name="IGNORE_DUPLICATED_THROWS" value="false" />
       <option name="IGNORE_POINT_TO_ITSELF" value="false" />
-      <option name="myAdditionalJavadocTags" value="className:User" />
+      <option name="myAdditionalJavadocTags" value="className:User,Package,Name" />
     </inspection_tool>
     <inspection_tool class="JpaQlInspection" enabled="false" level="ERROR" enabled_by_default="false" />
   </profile>

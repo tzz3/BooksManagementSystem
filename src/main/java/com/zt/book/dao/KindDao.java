@@ -15,4 +15,6 @@ public interface KindDao {
     void updateKind(Kind kind);
 
     void deleteKind(Kind kind);
+
+    Kind findById(String id);
 }

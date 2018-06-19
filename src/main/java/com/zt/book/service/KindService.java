@@ -14,5 +14,5 @@ public interface KindService {
 
     Message updateKind(Kind kind);
 
-    Message deleteKind(Kind kind);
+    Message deleteKind(String id);
 }

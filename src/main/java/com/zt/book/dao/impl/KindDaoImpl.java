@@ -37,13 +37,22 @@ public class KindDaoImpl implements KindDao {
 
     @Override
     public void updateKind(Kind kind) {
-        String hql = "update Kind k set k.type=:type where k.id=:id";
-        sessionFactory.getCurrentSession().createQuery(hql).setParameter("type", kind.getType()).setParameter("id", kind.getId()).executeUpdate();
+        // String hql = "update Kind k set k.type=:type where k.id=:id";
+        // sessionFactory.getCurrentSession().createQuery(hql).setParameter("type", kind.getType()).setParameter("id", kind.getId()).executeUpdate();
+        sessionFactory.getCurrentSession().update(kind);
     }
 
     @Override
     public void deleteKind(Kind kind) {
-        String hql = "delete from Kind k where k.id=:id";
-        sessionFactory.getCurrentSession().createQuery(hql).setParameter("id", kind.getId()).executeUpdate();
+        // String hql = "delete from Kind k where k.id=:id";
+        // sessionFactory.getCurrentSession().createQuery(hql).setParameter("id", id).executeUpdate();
+        sessionFactory.getCurrentSession().delete(kind);
+
+    }
+
+    @Override
+    public Kind findById(String id) {
+        String hql = "from Kind k where k.id=:id";
+        return sessionFactory.getCurrentSession().createQuery(hql, Kind.class).setParameter("id", id).uniqueResult();
     }
 }

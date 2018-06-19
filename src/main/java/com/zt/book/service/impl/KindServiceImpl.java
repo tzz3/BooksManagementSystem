@@ -1,6 +1,8 @@
 package com.zt.book.service.impl;
 
+import com.zt.book.dao.BookDao;
 import com.zt.book.dao.KindDao;
+import com.zt.book.pojo.Book;
 import com.zt.book.pojo.Kind;
 import com.zt.book.pojo.Message;
 import com.zt.book.service.KindService;
@@ -21,6 +23,9 @@ public class KindServiceImpl implements KindService {
     @Resource
     private KindDao kindDao;
 
+    @Resource
+    private BookDao bookDao;
+
     @Override
     public List<Kind> findAll() {
         return kindDao.findAll();
@@ -28,24 +33,18 @@ public class KindServiceImpl implements KindService {
 
     @Override
     public Message addKind(Kind kind) {
+        Message msg = new Message();
         String id = UUID.randomUUID().toString().substring(0, 4);
         kind.setId(id);
-        Message msg = new Message();
-        List<Kind> kinds = kindDao.findAll();
-        try {
-            if (!(kind.getType().equals("") || kind.getType() == null)) {
-                if (kindDao.findByType(kind.getType()) != null) {
-                    msg.setMsg("此分类已存在");
-                    return msg;
-                }
-                kindDao.addKind(kind);
-                msg.setMsg("添加成功");
-            } else {
-                msg.setMsg("必须输入类型名字");
+        if (!(kind.getType().equals("") || kind.getType() == null)) {
+            if (kindDao.findByType(kind.getType()) != null) {
+                msg.setMsg("类型已存在");
+                return msg;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            msg.setMsg("系统异常");
+            kindDao.addKind(kind);
+            msg.setMsg("添加成功");
+        } else {
+            msg.setMsg("必须输入类型名字");
         }
         return msg;
     }
@@ -53,33 +52,37 @@ public class KindServiceImpl implements KindService {
     @Override
     public Message updateKind(Kind kind) {
         Message msg = new Message();
-        try {
-            if (!(kind.getType().equals("") || kind.getType() == null)) {
-                if (kindDao.findByType(kind.getType()) != null) {
-                    msg.setMsg("此分类已存在");
-                    return msg;
-                }
-                kindDao.updateKind(kind);
-                msg.setMsg("更新成功");
-            } else {
-                msg.setMsg("必须输入类型名字");
+        if (!(kind.getType().equals("") || kind.getType() == null)) {
+            if (kindDao.findByType(kind.getType()) != null) {
+                msg.setMsg("此分类已存在");
+                return msg;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            msg.setMsg("系统异常");
+            kindDao.updateKind(kind);
+            msg.setMsg("更新成功");
+        } else {
+            msg.setMsg("必须输入类型名字");
         }
         return msg;
     }
 
     @Override
-    public Message deleteKind(Kind kind) {
+    public Message deleteKind(String id) {
         Message msg = new Message();
-        try {
+        Kind kind = kindDao.findById(id);
+        if (kind != null) {
+            List<Book> books = bookDao.findById(id);
+            //设置此分类所有book的外键为空
+            if (books != null) {
+                for (Book book :
+                        books) {
+                    book.setKind(null);
+                    bookDao.updateBook(book);
+                }
+            }
             kindDao.deleteKind(kind);
             msg.setMsg("删除成功");
-        }catch (Exception e){
-            e.printStackTrace();
-            msg.setMsg("系统异常");
+        } else {
+            msg.setMsg("分类不存在");
         }
         return msg;
     }

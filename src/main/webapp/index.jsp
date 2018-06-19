@@ -6,7 +6,7 @@
     <title>图书管理后台</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/home.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -76,6 +76,7 @@
         var iframes = document.getElementById("iframes");
         /* 点击访问 获取用户接口 ，成功跳转 成功页面显示 */
         iframes.src = "${pageContext.request.contextPath}/books/findAll";
+        <%--iframes.src = "${pageContext.request.contextPath}/html/h.html";--%>
     });
 
     $("#bookKind").click(function () {

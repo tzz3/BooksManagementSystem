@@ -33,24 +33,44 @@ public class KindController {
     @RequestMapping("/addKind")
     @ResponseBody //转换为json返回
     public Message addKind(Kind kind) {
-        return kindService.addKind(kind);
+        try {
+            return kindService.addKind(kind);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message msg = new Message();
+            msg.setMsg("系统异常");
+            return msg;
+        }
     }
 
     @RequestMapping("/updateKind")
     @ResponseBody
-    public Message updateKind(String id,String type) {
-        Kind kind = new Kind();
-        kind.setId(id);
-        kind.setType(type);
-        System.out.println(kind.toString());
-        return kindService.updateKind(kind);
+    public Message updateKind(String id, String type) {
+        try {
+            Kind kind = new Kind();
+            kind.setId(id);
+            kind.setType(type);
+            System.out.println(kind.toString());
+            return kindService.updateKind(kind);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message msg = new Message();
+            msg.setMsg("系统异常");
+            return msg;
+        }
     }
 
     @RequestMapping("/deleteKind")
     @ResponseBody
-    public Message deleteKind(String id){
-        Kind kind = new Kind();
-        kind.setId(id);
-        return kindService.deleteKind(kind);
+    public Message deleteKind(String id) {
+        System.out.println(id);
+        try {
+            return kindService.deleteKind(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message msg = new Message();
+            msg.setMsg("删除异常");
+            return msg;
+        }
     }
 }

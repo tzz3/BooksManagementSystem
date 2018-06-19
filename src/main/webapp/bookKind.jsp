@@ -27,7 +27,7 @@
         </td>
         <td class="value-td"><%=k.getType()%>
         </td>
-        <td class="value-botton">
+        <td class="value-button">
             <button type="button" class="update">修改</button>
             <button type="button" class="delete">删除</button>
         </td>
@@ -96,11 +96,14 @@
                     url: "${pageContext.request.contextPath}/kinds/addKind",
                     datatype: "json",
                     data: $('#form').serialize(),
+                    async: false,
                     success: function (data) {
                         alert(data.msg);
+                        location.reload();
                     },
                     error: function (data) {
                         alert(data.msg);
+                        location.reload();
                     }
                 })
             });
@@ -112,6 +115,7 @@
         /*获取我们对应的 id  type  */
         var id = $(this).parents("tr").find("td").eq(0).text();
         id = id.substr(0, 4);
+        var type = $("type").parents("tr").find("td").eq(0).text();
 
         if ($(".box").css("display") === 'none') {
 
@@ -131,13 +135,17 @@
             });
 
             //先给前端修改页面显示：修改数据($().val())
+            $("#id").val(id);
+            $("#type").val(type);
+
             $(".submit").click(function () {
                 //获取type
                 var type = document.getElementById("type").value;
 
                 $.ajax({
+                    type: "post",
                     url: "${pageContext.request.contextPath}/kinds/updateKind",
-                    data: {"id": id, "type": type},
+                    data: $("#form").serialize(),
                     dataType: "json",
                     async: false,
                     cache: false,
@@ -160,6 +168,7 @@
         var id = $(this).parents("tr").find("td").eq(0).text().substr(0, 4);
 
         $.ajax({
+            type: "post",
             url: "${pageContext.request.contextPath}/kinds/deleteKind",
             data: {"id": id},
             dataType: "json",
@@ -174,7 +183,5 @@
             }
         });
     });
-
-
 </script>
 </html>

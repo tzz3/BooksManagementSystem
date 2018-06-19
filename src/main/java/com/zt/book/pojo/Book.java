@@ -79,4 +79,15 @@ public class Book implements Serializable {
     public void setKind(Kind kind) {
         this.kind = kind;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", intro='" + intro + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

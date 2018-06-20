@@ -6,10 +6,13 @@ import com.zt.book.pojo.Book;
 import com.zt.book.pojo.Kind;
 import com.zt.book.pojo.Message;
 import com.zt.book.service.BookService;
+import com.zt.book.utils.UpUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Message addBook(Book book, String type) {
+    public Message addBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
         Message msg = new Message();
         Book b = bookDao.findByName(book.getBookName());
         if (b == null) {
@@ -49,6 +52,15 @@ public class BookServiceImpl implements BookService {
                 kindDao.addKind(kind);
             }
             book.setKind(kind);
+
+            //判断上传文件
+            if (filedata != null) {
+                String src = UpUtils.getSrc(filedata, request);
+                book.setAddress(src);
+            } else {
+                book.setAddress("");
+            }
+
             bookDao.addBook(book);
             msg.setMsg("添加成功");
         } else {
@@ -58,9 +70,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Message updateBook(Book book, String type) {
+    public Message updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
         Kind kind = kindDao.findByType(type);
         Book b = bookDao.findByBId(book.getId());
+        System.out.println("b:" + b.toString());
+        Book bk = bookDao.findByName(book.getBookName());
+        if (bk != null && !bk.getId().equals(book.getId())) {
+            return new Message("书名重复");
+        }
         if (b != null) {
             if (kind == null) {
                 kind = new Kind();
@@ -69,6 +86,18 @@ public class BookServiceImpl implements BookService {
                 kindDao.addKind(kind);
             }
             book.setKind(kind);
+
+            //判断上传文件
+            String src = UpUtils.getSrc(filedata, request);
+            System.out.println(filedata.getSize());
+            if (filedata.getSize() > 0) {
+                book.setAddress(src);
+            }else{
+                book.setAddress(b.getAddress());
+            }
+
+            System.out.println(book.toString());
+
             bookDao.updateBook(book);
             return new Message("修改成功");
         } else {

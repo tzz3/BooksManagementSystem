@@ -3,12 +3,15 @@ package com.zt.book.controller;
 import com.zt.book.pojo.Book;
 import com.zt.book.pojo.Message;
 import com.zt.book.service.BookService;
+import com.zt.book.utils.UpUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,27 +45,55 @@ public class BookController {
     }
 
     @RequestMapping("/addBook")
-    @ResponseBody
-    public Message addBook(Book book, String type) {
+    public ModelAndView addBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
         try {
-            return bookService.addBook(book, type);
+            Message msg = bookService.addBook(book, type, filedata, request);
+            mav.addObject("msg", msg);
+            List<Book> books = bookService.findAll();
+            mav.addObject("books", books);
+            mav.setViewName("/book.jsp");
+            return mav;
         } catch (Exception e) {
             e.printStackTrace();
             Message msg = new Message();
             msg.setMsg("系统异常");
-            return msg;
+            mav.addObject("msg", msg);
+            List<Book> books = bookService.findAll();
+            mav.addObject("books", books);
+            mav.setViewName("/book.jsp");
+            return mav;
         }
     }
 
+    // @RequestMapping("/updateBook")
+    // @ResponseBody
+    // public Message updateBook(Book book, String type) {
+    //     try {
+    //         return bookService.updateBook(book, type);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return new Message("更新失败");
+    //     }
+    // }
+
     @RequestMapping("/updateBook")
-    @ResponseBody
-    public Message updateBook(Book book, String type) {
+    public ModelAndView updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
         try {
-            return bookService.updateBook(book, type);
+            Message msg = bookService.updateBook(book,type,filedata,request);
+            mav.addObject("msg", msg);
+            List<Book> books = bookService.findAll();
+            mav.addObject("books", books);
+            mav.setViewName("/book.jsp");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Message("更新失败");
+            mav.addObject("msg", new Message("更新失败"));
+            List<Book> books = bookService.findAll();
+            mav.addObject("books", books);
+            mav.setViewName("/book.jsp");
         }
+        return mav;
     }
 
     @RequestMapping("/deleteBook")
@@ -74,5 +105,11 @@ public class BookController {
             e.printStackTrace();
             return new Message("系统异常");
         }
+    }
+
+    @RequestMapping("/up")
+    public void up(MultipartFile filedata, HttpServletRequest request) {
+        String src = UpUtils.getSrc(filedata, request);
+        System.out.println(src);
     }
 }

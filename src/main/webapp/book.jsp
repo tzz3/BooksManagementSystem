@@ -1,7 +1,12 @@
 <%@page import="com.zt.book.pojo.Book" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page import="com.zt.book.pojo.Message" %>
 <%
     List<Book> books = (List<Book>) request.getAttribute("books");
+    Message msg = (Message) request.getAttribute("msg");
+    // if (msg != null && !msg.equals("")) {
+    //     System.out.println("msg:" + msg.getMsg());
+    // }
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -45,10 +50,9 @@
         </td>
         <td class="value-td"><%=b.getIntro()%>
         </td>
-        <td class="value-td"><%=b.getAddress()%>
-        </td>
-        <%-- <td class="value-td"><img class="yu"
-            src="${pageContext.request.contextPath}/<%=b.getAddress()%>" /></td> --%>
+        <%--<td class="value-td"><%=b.getAddress()%>--%>
+        <%--</td>--%>
+        <td class="value-td"><img class="yu" src="${pageContext.request.contextPath}/<%=b.getAddress()%>"/></td>
         <td class="value-botton">
             <button type="button" class="update">修改</button>
             <button type="button" class="delete">删除</button>
@@ -61,7 +65,8 @@
 </table>
 <button type="button" class="add" id="add">增加</button>
 <div class="box">
-    <form action="#" id="form" method="post">
+    <form action="${pageContext.request.contextPath}/books/addBook" id="form" method="post"
+          enctype="multipart/form-data">
         <button type="button" class="close" id="close">关闭</button>
         <div>
             <p id="id-p">ID</p>
@@ -85,7 +90,8 @@
         </div>
         <div class="box-th">
             <p>图片地址</p>
-            <input type="text" name="address" id="address" class="address"/>
+            <%--<input type="text" name="address" id="address" class="address"/>--%>
+            <input type="file" name="filedata" id="filedata" class="filedata">
         </div>
         <input type="submit" class="submit" value="提交"/>
     </form>
@@ -93,6 +99,9 @@
 <div class="box-shadow"></div>
 </body>
 <script type="text/javascript">
+    if ("${msg.msg}" != null || "${msg.msg}" !== "") {
+        alert("${msg.msg}");
+    }
     //关闭窗口
     $("#close").click(function () {
         $(".box").css({
@@ -131,23 +140,23 @@
                 "display": "block"
             });
             //添加事件
-            $(".submit").click(function () {
-                $.ajax({
-                    type: "post",
-                    url: "${pageContext.request.contextPath}/books/addBook",
-                    dataType: "json",
-                    async: false,
-                    data: $("#form").serialize(),
-                    success: function (data) {
-                        alert(data.msg);
-                        location.reload();
-                    },
-                    error: function (data) {
-                        alert(data.msg);
-                        location.reload();
-                    }
-                })
-            });
+            <%--$(".submit").click(function () {--%>
+            <%--$.ajax({--%>
+            <%--type: "post",--%>
+            <%--url: "${pageContext.request.contextPath}/books/addBook",--%>
+            <%--dataType: "json",--%>
+            <%--async: false,--%>
+            <%--data: $("#form").serialize(),--%>
+            <%--success: function (data) {--%>
+            <%--alert(data.msg);--%>
+            <%--location.reload();--%>
+            <%--},--%>
+            <%--error: function (data) {--%>
+            <%--alert(data.msg);--%>
+            <%--location.reload();--%>
+            <%--}--%>
+            <%--})--%>
+            <%--});--%>
         }
     });
 
@@ -161,6 +170,8 @@
         var bookAuthor = $(this).parents("tr").find("td").eq(3).text().replace(/^\s+|\s+$/g, "");
         var intro = $(this).parents("tr").find("td").eq(4).text().replace(/^\s+|\s+$/g, "");
         var address = $(this).parents("tr").find("td").eq(5).text().replace(/^\s+|\s+$/g, "");
+        var filedata = $(this).parents("tr").find("td").eq(5).find("img").eq(0)[0].src;
+        // alert(filedata);
         if ($(".box").css("display") === 'none') {
 
             $(".box").css({
@@ -184,26 +195,30 @@
             $("#bookName").val(bookName);
             $("#bookAuthor").val(bookAuthor);
             $("#intro").val(intro);
-            $("#address").val(address);
+            // $("#address").val(address);
 
-            $(".submit").click(function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/books/updateBook",
-                    type: "post",
-                    dataType: "json",
-                    async: false,
-                    data: $("#form").serialize(),
-                    success: function (data) {
-                        alert(data.msg);
-                        location.reload();
-                    },
-                    error: function (data) {
-                        alert(data.msg);
-                        location.reload();
-                    }
-                });
+            //修改form action
+            $("#form").attr("action", "${pageContext.request.contextPath}/books/updateBook");
 
-            });
+
+            <%--$(".submit").click(function () {--%>
+            <%--$.ajax({--%>
+            <%--url: "${pageContext.request.contextPath}/books/updateBook",--%>
+            <%--type: "post",--%>
+            <%--dataType: "json",--%>
+            <%--async: false,--%>
+            <%--data: $("#form").serialize(),--%>
+            <%--success: function (data) {--%>
+            <%--alert(data.msg);--%>
+            <%--location.reload();--%>
+            <%--},--%>
+            <%--error: function (data) {--%>
+            <%--alert(data.msg);--%>
+            <%--location.reload();--%>
+            <%--}--%>
+            <%--});--%>
+
+            <%--});--%>
         }
     });
 

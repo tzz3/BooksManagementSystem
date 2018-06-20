@@ -46,4 +46,21 @@ public class BookDaoImpl implements BookDao {
         String hql = "from Book b where b.bookName like :bookName";
         return sessionFactory.getCurrentSession().createQuery(hql, Book.class).setParameter("bookName", "%" + bookName + "%").getResultList();
     }
+
+    @Override
+    public Book findByName(String bookName) {
+        String hql = "from Book b where b.bookName=:bookName";
+        return sessionFactory.getCurrentSession().createQuery(hql,Book.class).setParameter("bookName",bookName).uniqueResult();
+    }
+
+    @Override
+    public Book findByBId(String id) {
+        String hql = "from Book b where b.id=:id";
+        return sessionFactory.getCurrentSession().createQuery(hql,Book.class).setParameter("id",id).uniqueResult();
+    }
+
+    @Override
+    public void deleteBook(Book book) {
+        sessionFactory.getCurrentSession().delete(book);
+    }
 }

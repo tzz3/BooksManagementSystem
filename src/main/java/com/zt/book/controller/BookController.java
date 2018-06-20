@@ -3,7 +3,6 @@ package com.zt.book.controller;
 import com.zt.book.pojo.Book;
 import com.zt.book.pojo.Message;
 import com.zt.book.service.BookService;
-import net.sf.json.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +37,7 @@ public class BookController {
         ModelAndView mav = new ModelAndView();
         List<Book> books = bookService.findByLike(bookName);
         mav.setViewName("/book.jsp");
-        mav.addObject("books",books);
+        mav.addObject("books", books);
         return mav;
     }
 
@@ -57,13 +56,23 @@ public class BookController {
 
     @RequestMapping("/updateBook")
     @ResponseBody
-    public Message updateBook(Book book) {
+    public Message updateBook(Book book, String type) {
         try {
-            return bookService.updateBook(book);
+            return bookService.updateBook(book, type);
         } catch (Exception e) {
             e.printStackTrace();
-            Message msg = new Message("更新失败");
-            return msg;
+            return new Message("更新失败");
+        }
+    }
+
+    @RequestMapping("/deleteBook")
+    @ResponseBody
+    public Message deleteBook(String id) {
+        try {
+            return bookService.deleteBook(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message("系统异常");
         }
     }
 }

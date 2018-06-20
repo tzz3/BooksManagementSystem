@@ -9,10 +9,11 @@ public interface BookService {
 
     List<Book> findAll();
 
-
     Message addBook(Book book, String type);
 
-    Message updateBook(Book book);
+    Message updateBook(Book book, String type);
 
     List<Book> findByLike(String bookName);
+
+    Message deleteBook(String id);
 }

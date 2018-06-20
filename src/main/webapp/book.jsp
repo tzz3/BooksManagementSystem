@@ -148,8 +148,6 @@
                     }
                 })
             });
-
-
         }
     });
 
@@ -211,7 +209,22 @@
 
     /*删除按钮*/
     $(".delete").click(function () {
-
+        var id = $(this).parents("tr").find("td").eq(0).text().replace(/^\s+|\s+$/g, "");
+        $.ajax({
+            url: "${pageContext.request.contextPath}/books/deleteBook",
+            type: "post",
+            dataType: "json",
+            data: {"id": id},
+            async: false,
+            success: function (data) {
+                alert(data.msg);
+                location.reload();
+            },
+            error: function (data) {
+                alert(data.msg);
+                location.reload();
+            }
+        })
     });
 
 

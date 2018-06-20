@@ -14,4 +14,10 @@ public interface BookDao {
     void updateBook(Book book);
 
     List<Book> findByLike(String bookName);
+
+    Book findByName(String bookName);
+
+    Book findByBId(String id);
+
+    void deleteBook(Book book);
 }

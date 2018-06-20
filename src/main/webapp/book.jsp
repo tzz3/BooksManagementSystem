@@ -28,18 +28,25 @@
         <td>图书作者</td>
         <td>图书简介</td>
         <td>图书图片地址</td>
-        <td>修改</td>
+        <td>操作</td>
     </tr>
     <%
-        for (Book b : books) {
+        if (books != null) {
+            for (Book b : books) {
     %>
     <tr class="value-tr">
-        <td class="value-td"><%=b.getId()%></td>
-        <td class="value-td"><%=b.getKind().getType()%></td>
-        <td class="value-td"><%=b.getBookName()%></td>
-        <td class="value-td"><%=b.getBookAuthor()%></td>
-        <td class="value-td"><%=b.getIntro()%></td>
-        <td class="value-td"><%=b.getAddress()%></td>
+        <td class="value-td"><%=b.getId()%>
+        </td>
+        <td class="value-td"><%=b.getKind().getType()%>
+        </td>
+        <td class="value-td"><%=b.getBookName()%>
+        </td>
+        <td class="value-td"><%=b.getBookAuthor()%>
+        </td>
+        <td class="value-td"><%=b.getIntro()%>
+        </td>
+        <td class="value-td"><%=b.getAddress()%>
+        </td>
         <%-- <td class="value-td"><img class="yu"
             src="${pageContext.request.contextPath}/<%=b.getAddress()%>" /></td> --%>
         <td class="value-botton">
@@ -49,6 +56,7 @@
     <tr>
             <%
 				}
+        }
 			%>
 </table>
 <button type="button" class="add" id="add">增加</button>
@@ -69,7 +77,7 @@
         </div>
         <div class="box-th">
             <p>图书作者</p>
-            <input type="text" name="author" id="author" class="author"/>
+            <input type="text" name="bookAuthor" id="bookAuthor" class="author"/>
         </div>
         <div class="box-th">
             <p>图书简介</p>
@@ -124,23 +132,17 @@
             });
             //添加事件
             $(".submit").click(function () {
-                var id = $("#id").text();
-                var type = $("#type").text();
-                var bookName = $("#bookName").text();
-                var bookAuthor = $("#author").text();
-                var intro = $("#intro").text();
-                var address = $("#address").text();
                 $.ajax({
                     type: "post",
                     url: "${pageContext.request.contextPath}/books/addBook",
                     dataType: "json",
                     async: false,
-                    data: $(".form").serialize(),
+                    data: $("#form").serialize(),
                     success: function (data) {
                         alert(data.msg);
                         location.reload();
                     },
-                    error: function () {
+                    error: function (data) {
                         alert(data.msg);
                         location.reload();
                     }
@@ -155,13 +157,13 @@
     $(".update").click(function () {
 
         //获取对应的值 填入 表格中
-        var id = $(this).parents("tr").find("td").eq(0).text();
-        var type = $(this).parents("tr").find("td").eq(1).text();
-        var bookName = $(this).parents("tr").find("td").eq(2).text();
-        var author = $(this).parents("tr").find("td").eq(3).text();
-        var intro = $(this).parents("tr").find("td").eq(4).text();
-        var address = $(this).parents("tr").find("td").eq(5).text();
-        if ($(".box").css("display") == 'none') {
+        var id = $(this).parents("tr").find("td").eq(0).text().replace(/^\s+|\s+$/g, "");
+        var type = $(this).parents("tr").find("td").eq(1).text().replace(/^\s+|\s+$/g, "");
+        var bookName = $(this).parents("tr").find("td").eq(2).text().replace(/^\s+|\s+$/g, "");
+        var bookAuthor = $(this).parents("tr").find("td").eq(3).text().replace(/^\s+|\s+$/g, "");
+        var intro = $(this).parents("tr").find("td").eq(4).text().replace(/^\s+|\s+$/g, "");
+        var address = $(this).parents("tr").find("td").eq(5).text().replace(/^\s+|\s+$/g, "");
+        if ($(".box").css("display") === 'none') {
 
             $(".box").css({
                 "display": "block"
@@ -182,9 +184,28 @@
             $("#id").val(id);
             $("#type").val(type);
             $("#bookName").val(bookName);
-            $("#author").val(author);
+            $("#bookAuthor").val(bookAuthor);
             $("#intro").val(intro);
             $("#address").val(address);
+
+            $(".submit").click(function () {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/books/updateBook",
+                    type: "post",
+                    dataType: "json",
+                    async: false,
+                    data: $("#form").serialize(),
+                    success: function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                });
+
+            });
         }
     });
 

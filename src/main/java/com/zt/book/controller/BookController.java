@@ -32,19 +32,38 @@ public class BookController {
         return mav;
     }
 
+
+    @RequestMapping("/findByLike")
+    public ModelAndView findByLike(String bookName) {
+        ModelAndView mav = new ModelAndView();
+        List<Book> books = bookService.findByLike(bookName);
+        mav.setViewName("/book.jsp");
+        mav.addObject("books",books);
+        return mav;
+    }
+
     @RequestMapping("/addBook")
     @ResponseBody
-    public Message addBook(Book book,String type) {
-        System.out.println(book.toString());
-        System.out.println(type);
-        // try {
-        //     return bookService.addBook(book);
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        //     Message msg = new Message();
-        //     msg.setMsg("系统异常");
-        //     return msg;
-        // }
-        return null;
+    public Message addBook(Book book, String type) {
+        try {
+            return bookService.addBook(book, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message msg = new Message();
+            msg.setMsg("系统异常");
+            return msg;
+        }
+    }
+
+    @RequestMapping("/updateBook")
+    @ResponseBody
+    public Message updateBook(Book book) {
+        try {
+            return bookService.updateBook(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message msg = new Message("更新失败");
+            return msg;
+        }
     }
 }

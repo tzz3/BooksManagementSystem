@@ -69,20 +69,27 @@ public class KindServiceImpl implements KindService {
     public Message deleteKind(String id) {
         Message msg = new Message();
         Kind kind = kindDao.findById(id);
-        if (kind != null) {
+        if (kind != null && !kind.getType().equals("未知")) {
             List<Book> books = bookDao.findById(id);
+            Kind k = kindDao.findByType("未知");
+            if (k == null) {
+                k = new Kind();
+                k.setId(UUID.randomUUID().toString().substring(0, 4));
+                k.setType("未知");
+                kindDao.addKind(k);
+            }
             //设置此分类所有book的外键为空
             if (books != null) {
                 for (Book book :
                         books) {
-                    book.setKind(null);
+                    book.setKind(k);
                     bookDao.updateBook(book);
                 }
             }
             kindDao.deleteKind(kind);
             msg.setMsg("删除成功");
         } else {
-            msg.setMsg("分类不存在");
+            msg.setMsg("分类不存在或默认种类不能被删除");
         }
         return msg;
     }

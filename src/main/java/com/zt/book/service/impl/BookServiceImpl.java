@@ -1,6 +1,7 @@
 package com.zt.book.service.impl;
 
 import com.zt.book.dao.BookDao;
+import com.zt.book.dao.KindDao;
 import com.zt.book.pojo.Book;
 import com.zt.book.pojo.Kind;
 import com.zt.book.pojo.Message;
@@ -24,25 +25,42 @@ public class BookServiceImpl implements BookService {
     @Resource
     private BookDao bookDao;
 
+    @Resource
+    private KindDao kindDao;
+
     @Override
     public List<Book> findAll() {
         return bookDao.findAll();
     }
 
     @Override
-    public Message addBook(Book book) {
+    public Message addBook(Book book, String type) {
         Message msg = new Message();
-        if (book.getBookName().equals("") || book.getBookName() == null || book.getKind() == null) {
-            msg.setMsg("不可为空");
-        } else {
-            String id = UUID.randomUUID().toString().substring(0, 4);
-            book.setId(id);
-            Kind kind = new Kind();
-            // kind.setType(book.);
-            book.setKind(kind);
-            bookDao.addBook(book);
-            msg.setMsg("添加成功");
+        String id = UUID.randomUUID().toString().substring(0, 4);
+        book.setId(id);
+        Kind kind = kindDao.findByType(type);
+        if (kind == null) {
+            kind = new Kind();
+            String kid = UUID.randomUUID().toString().substring(0, 4);
+            kind.setId(kid);
+            kind.setType(type);
+            kindDao.addKind(kind);
         }
+        book.setKind(kind);
+        bookDao.addBook(book);
+        msg.setMsg("添加成功");
         return msg;
+    }
+
+    @Override
+    public Message updateBook(Book book) {
+        bookDao.updateBook(book);
+        Message msg= new Message("修改成功");
+        return msg;
+    }
+
+    @Override
+    public List<Book> findByLike(String bookName) {
+        return bookDao.findByLike(bookName);
     }
 }

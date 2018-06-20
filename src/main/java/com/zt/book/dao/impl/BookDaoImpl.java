@@ -40,4 +40,10 @@ public class BookDaoImpl implements BookDao {
     public void updateBook(Book book) {
         sessionFactory.getCurrentSession().merge(book);
     }
+
+    @Override
+    public List<Book> findByLike(String bookName) {
+        String hql = "from Book b where b.bookName like :bookName";
+        return sessionFactory.getCurrentSession().createQuery(hql, Book.class).setParameter("bookName", "%" + bookName + "%").getResultList();
+    }
 }

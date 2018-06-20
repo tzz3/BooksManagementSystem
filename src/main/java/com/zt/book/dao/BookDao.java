@@ -1,7 +1,6 @@
 package com.zt.book.dao;
 
 import com.zt.book.pojo.Book;
-import com.zt.book.pojo.Kind;
 
 import java.util.List;
 
@@ -13,4 +12,6 @@ public interface BookDao {
     List<Book> findById(String id);
 
     void updateBook(Book book);
+
+    List<Book> findByLike(String bookName);
 }

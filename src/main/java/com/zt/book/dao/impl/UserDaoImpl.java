@@ -1,12 +1,12 @@
 package com.zt.book.dao.impl;
 
 import com.zt.book.dao.UserDao;
-import com.zt.book.pojo.Book;
 import com.zt.book.pojo.User;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author tzz
@@ -27,5 +27,38 @@ public class UserDaoImpl implements UserDao {
     public User findByName(String userName) {
         String hql = "from User u where u.userName=:userName";
         return sessionFactory.getCurrentSession().createQuery(hql, User.class).setParameter("userName", userName).uniqueResult();
+    }
+
+    @Override
+    public List<User> findAll() {
+        String hql = "from User u order by u.id";
+        return sessionFactory.getCurrentSession().createQuery(hql, User.class).getResultList();
+    }
+
+    @Override
+    public List<User> findByLike(String userName) {
+        String hql = "from User u where u.userName like :userName order by u.id";
+        return sessionFactory.getCurrentSession().createQuery(hql, User.class).setParameter("userName", "%" + userName + "%").getResultList();
+    }
+
+    @Override
+    public User findById(String id) {
+        String hql = "from User u where u.id=:id";
+        return sessionFactory.getCurrentSession().createQuery(hql, User.class).setParameter("id", id).uniqueResult();
+    }
+
+    @Override
+    public void delete(User user) {
+        sessionFactory.getCurrentSession().delete(user);
+    }
+
+    @Override
+    public void addUser(User user) {
+        sessionFactory.getCurrentSession().persist(user);
+    }
+
+    @Override
+    public void update(User user) {
+        sessionFactory.getCurrentSession().merge(user);
     }
 }

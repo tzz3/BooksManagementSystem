@@ -1,13 +1,17 @@
 package com.zt.book.controller;
 
+import com.zt.book.pojo.Message;
 import com.zt.book.pojo.User;
 import com.zt.book.service.UserService;
+import org.aspectj.bridge.MessageWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author tzz
@@ -35,4 +39,58 @@ public class UserController {
         }
         return mav;
     }
+
+    @RequestMapping("/findAll")
+    public ModelAndView findAll() {
+        ModelAndView mav = new ModelAndView();
+        List<User> users = userService.findAll();
+        mav.setViewName("/userList.jsp");
+        mav.addObject("users", users);
+        return mav;
+    }
+
+    @RequestMapping("/findByLike")
+    public ModelAndView findByLike(String userName) {
+        ModelAndView mav = new ModelAndView();
+        List<User> users = userService.findByLike(userName);
+        mav.setViewName("/userList.jsp");
+        mav.addObject("users", users);
+        return mav;
+    }
+
+    @RequestMapping("/addUser")
+    @ResponseBody
+    public Message addUser(User user) {
+        Message msg = new Message();
+        try {
+            return userService.addUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setMsg("系统异常，添加失败");
+            return msg;
+        }
+    }
+
+    @RequestMapping("/deleteUser")
+    @ResponseBody
+    public Message deleteUser(String id) {
+        try {
+            return userService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message("系统异常，删除失败");
+        }
+    }
+
+    @RequestMapping("/updateUser")
+    @ResponseBody
+    public Message updateUser(User user) {
+        try {
+            return userService.updateUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message("系统异常，更新失败");
+        }
+    }
+
 }

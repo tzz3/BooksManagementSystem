@@ -67,7 +67,7 @@
         </div>
         <div class="box-th">
             <p>密码</p>
-            <input type="text" name="passWord" id="passWord" class="passWord"/>
+            <input type="text" name="userPassword" id="userPassword" class="passWord"/>
         </div>
         <div class="box-th">
             <p>手机</p>
@@ -121,6 +121,19 @@
             });
 
             //添加
+            $(".submit").click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/users/addUser",
+                    type: "post",
+                    data: $("#form").serialize(),
+                    async: false,
+                    success: function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                })
+            });
 
         }
 
@@ -128,11 +141,11 @@
 
     //点击修改按钮
     $(".update").click(function () {
-        var id = $(this).parents("tr").find("td").eq(0).html();
-        var userName = $(this).parents("tr").find("td").eq(1).html();
-        var psw = $(this).parents("tr").find("td").eq(2).html();
-        var phone = $(this).parents("tr").find("td").eq(3).html();
-        var email = $(this).parents("tr").find("td").eq(4).html();
+        var id = $(this).parents("tr").find("td").eq(0).html().replace(/^\s+|\s+$/g, "");
+        var userName = $(this).parents("tr").find("td").eq(1).html().replace(/^\s+|\s+$/g, "");
+        var psw = $(this).parents("tr").find("td").eq(2).html().replace(/^\s+|\s+$/g, "");
+        var phone = $(this).parents("tr").find("td").eq(3).html().replace(/^\s+|\s+$/g, "");
+        var email = $(this).parents("tr").find("td").eq(4).html().replace(/^\s+|\s+$/g, "");
         if ($(".box").css("display") == 'none') {
 
             $(".box").css({
@@ -153,15 +166,40 @@
             //先给前端修改页面显示：修改数据
             $("#id").val(id);
             $("#userName").val(userName);
-            $("#passWord").val(psw);
+            // $("#userPassword").val(psw);
             $("#phone").val(phone);
             $("#email").val(email);
 
             //修改
+            $(".submit").click(function () {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/users/updateUser",
+                    data: $("#form").serialize(),
+                    type: "post",
+                    async: false,
+                    success: function (data) {
+                        alert(data.msg);
+                        location.reload();
+                    }
+                })
+            });
         }
-    })
+    });
 
     //删除
+    $(".delete").click(function () {
+        var id = $(this).parents("tr").find("td").eq(0).html().replace(/^\s+|\s+$/g, "");
+        $.ajax({
+            url: "${pageContext.request.contextPath}/users/deleteUser",
+            type: "post",
+            data: {"id": id},
+            async: false,
+            success: function (data) {
+                alert(data.msg);
+                location.reload();
+            }
+        })
+    });
 
 </script>
 </html>

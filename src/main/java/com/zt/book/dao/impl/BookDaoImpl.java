@@ -21,7 +21,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findAll() {
-        String hql = "from Book book order by book.id";
+        String hql = "from Book book order by book.bookName";
         return sessionFactory.getCurrentSession().createQuery(hql, Book.class).getResultList();
     }
 

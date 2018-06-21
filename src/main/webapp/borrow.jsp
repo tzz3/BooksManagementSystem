@@ -35,12 +35,11 @@
 <script type="text/javascript">
 
     $("#userName").val("${u.userName}");
-    console.log(getDate());
-    $("#borrowDate").val(getDate());
-
-    $("#borrowDate").attr("min", getDate());
-    $("#returnDate").attr("min", getDate());
-
+    console.log(getDate(0));
+    $("#borrowDate").val(getDate(0));
+    $("#returnDate").val(getDate(7));
+    $("#borrowDate").attr("min", getDate(0));
+    $("#returnDate").attr("min", getDate(0));
 
     /*借书*/
     $(".submit").click(function () {
@@ -51,16 +50,17 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
-                location.href("/returns/findAll");
+                window.location.href("${pageContext.request.contextPath}/returns/findAll");
             }
         });
     });
 
-    function getDate() {
+    function getDate(dayNum) {
         var date = new Date();
+        date.setDate(date.getDate() + dayNum);
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
-        var day = date.getDate() + 1;
+        var day = date.getDate();
         if (month < 10) {
             month = '0' + month;
         }

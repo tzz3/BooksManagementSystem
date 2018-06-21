@@ -204,7 +204,8 @@
             <%--$("#form").attr("action", "${pageContext.request.contextPath}/books/updateBook");--%>
             $("#form").attr({"action": "#"});
 
-            $(".submit").click(function () {
+            $(".submit").click(function (e) {
+                e.preventDefault();
                 var formData = new FormData(document.getElementById("form"));
                 $.ajax({
                     url: "${pageContext.request.contextPath}/books/updateBook",
@@ -231,8 +232,8 @@
     });
 
     /*删除按钮*/
-    $(".delete").click(function () {
-
+    $(".delete").click(function (e) {
+        e.preventDefault();
         var id = $(this).parents("tr").find("td").eq(0).text().replace(/^\s+|\s+$/g, "");
         $.ajax({
             url: "${pageContext.request.contextPath}/books/deleteBook",

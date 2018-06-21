@@ -18,7 +18,7 @@
         </div>
         <div class="box-th">
             <p>用户</p>
-            <input type="text" id="userName" name="userName" placeholder="请输入用户"/>
+            <input type="text" id="userName" name="userName" placeholder="请输入用户" readonly="readonly"/>
         </div>
         <div class="box-th">
             <p>借书日期</p>
@@ -42,7 +42,8 @@
     $("#returnDate").attr("min", getDate(0));
 
     /*借书*/
-    $(".submit").click(function () {
+    $(".submit").click(function (e) {
+        e.preventDefault();
         $.ajax({
             type: "post",
             url: "${pageContext.request.contextPath}/borrows/borrow",

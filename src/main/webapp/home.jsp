@@ -1,20 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ page import="com.zt.book.pojo.Book" %>
 
-<%--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">--%>
-<%--<html>--%>
-<%--<head>--%>
-<%--<head>--%>
-<%--<meta charset="UTF-8">--%>
-<%--<title>主页</title>--%>
-<%--<link rel="stylesheet" href="${pageContext.request.contextPath }/css/home.css"/>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<img src="${pageContext.request.contextPath }/img/home.jpg" class="home"/>--%>
-
-<%--</body>--%>
-<%--</html>--%>
-
 <!DOCTYPE html>
 <html lang="zh-cn">
 <%
@@ -83,54 +69,6 @@
             <%
                 }
             %>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/1.jpg" alt="image1"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Creative Lifesaver</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/2.jpg" alt="image2"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Honest Entertainer</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/3.jpg" alt="image1"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Brave Astronaut</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/4.jpg" alt="image1"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Affectionate Decision Maker</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/5.jpg" alt="image1"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Faithful Investor</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-            <%--<a href="http://www.cnblogs.com/lhb25/" target="_blank">--%>
-            <%--<img src="../images/6.jpg" alt="image1"/>--%>
-            <%--</a>--%>
-            <%--<div class="sb-description">--%>
-            <%--<h3>Groundbreaking Artist</h3>--%>
-            <%--</div>--%>
-            <%--</li>--%>
         </ul>
 
         <div id="shadow" class="shadow"></div>
@@ -155,7 +93,6 @@
                     onReady: function () {
                         $navArrows.show();
                         $shadow.show();
-
                     },
                     orientation: 'r',
                     cuboidsRandom: true,

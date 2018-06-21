@@ -66,35 +66,36 @@ public class BookController {
         }
     }
 
-    // @RequestMapping("/updateBook")
-    // @ResponseBody
-    // public Message updateBook(Book book, String type) {
-    //     try {
-    //         return bookService.updateBook(book, type);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         return new Message("更新失败");
-    //     }
-    // }
-
     @RequestMapping("/updateBook")
-    public ModelAndView updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
+    @ResponseBody
+    public Message updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
         try {
-            Message msg = bookService.updateBook(book,type,filedata,request);
-            mav.addObject("msg", msg);
-            List<Book> books = bookService.findAll();
-            mav.addObject("books", books);
-            mav.setViewName("/book.jsp");
+            System.out.println(book.toString());
+            return bookService.updateBook(book, type, filedata, request);
         } catch (Exception e) {
             e.printStackTrace();
-            mav.addObject("msg", new Message("更新失败"));
-            List<Book> books = bookService.findAll();
-            mav.addObject("books", books);
-            mav.setViewName("/book.jsp");
+            return new Message("更新失败");
         }
-        return mav;
     }
+
+    // @RequestMapping("/updateBook")
+    // public ModelAndView updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
+    //     ModelAndView mav = new ModelAndView();
+    //     try {
+    //         Message msg = bookService.updateBook(book,type,filedata,request);
+    //         mav.addObject("msg", msg);
+    //         List<Book> books = bookService.findAll();
+    //         mav.addObject("books", books);
+    //         mav.setViewName("/book.jsp");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         mav.addObject("msg", new Message("更新失败"));
+    //         List<Book> books = bookService.findAll();
+    //         mav.addObject("books", books);
+    //         mav.setViewName("/book.jsp");
+    //     }
+    //     return mav;
+    // }
 
     @RequestMapping("/deleteBook")
     @ResponseBody

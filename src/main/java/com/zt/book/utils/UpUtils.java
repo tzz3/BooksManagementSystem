@@ -3,6 +3,7 @@ package com.zt.book.utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.stream.events.EndDocument;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -35,7 +36,10 @@ public class UpUtils {
         try {
             //获取上传文件的名称
             String orgName = filedata.getOriginalFilename();
-            String imgPath = savePath + "/" + orgName;
+            String end = orgName.substring(orgName.lastIndexOf("."));
+            String start = String.valueOf(System.currentTimeMillis());
+
+            String imgPath = savePath + "/" + start + end;
             FileOutputStream fos = new FileOutputStream(proPath + imgPath, true);
             FileOutputStream fos1 = new FileOutputStream(relPath + imgPath, true);
 

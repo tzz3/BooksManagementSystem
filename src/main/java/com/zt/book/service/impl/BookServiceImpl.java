@@ -87,7 +87,7 @@ public class BookServiceImpl implements BookService {
             }
             book.setKind(kind);
 
-            //判断上传文件
+            //判断上传文件是否为空
             String src = UpUtils.getSrc(filedata, request);
             System.out.println(filedata.getSize());
             if (filedata.getSize() > 0) {

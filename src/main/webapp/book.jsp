@@ -3,10 +3,7 @@
 <%@ page import="com.zt.book.pojo.Message" %>
 <%
     List<Book> books = (List<Book>) request.getAttribute("books");
-    Message msg = (Message) request.getAttribute("msg");
-    // if (msg != null && !msg.equals("")) {
-    //     System.out.println("msg:" + msg.getMsg());
-    // }
+    // Message msg = (Message) request.getAttribute("msg");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -65,8 +62,7 @@
 </table>
 <button type="button" class="add" id="add">增加</button>
 <div class="box">
-    <form action="${pageContext.request.contextPath}/books/addBook" id="form" method="post"
-          enctype="multipart/form-data">
+    <form action="#" id="form" method="post" enctype="multipart/form-data">
         <button type="button" class="close" id="close">关闭</button>
         <div>
             <p id="id-p">ID</p>
@@ -99,9 +95,10 @@
 <div class="box-shadow"></div>
 </body>
 <script type="text/javascript">
-    if ("${msg.msg}" != null || "${msg.msg}" !== "") {
+    if ("${msg.msg}" != null && "${msg.msg}" !== "") {
         alert("${msg.msg}");
     }
+    $("#form").attr("action", "#");
     //关闭窗口
     $("#close").click(function () {
         $(".box").css({
@@ -139,6 +136,10 @@
             $(".box-shadow").css({
                 "display": "block"
             });
+
+            //修改form action
+            $("#form").attr("action", "${pageContext.request.contextPath}/books/addBook");
+
             //添加事件
             <%--$(".submit").click(function () {--%>
             <%--$.ajax({--%>
@@ -198,27 +199,32 @@
             // $("#address").val(address);
 
             //修改form action
-            $("#form").attr("action", "${pageContext.request.contextPath}/books/updateBook");
+            <%--$("#form").attr("action", "${pageContext.request.contextPath}/books/updateBook");--%>
+            $("#form").attr({"action": "#"});
 
-
-            <%--$(".submit").click(function () {--%>
-            <%--$.ajax({--%>
-            <%--url: "${pageContext.request.contextPath}/books/updateBook",--%>
-            <%--type: "post",--%>
-            <%--dataType: "json",--%>
-            <%--async: false,--%>
-            <%--data: $("#form").serialize(),--%>
-            <%--success: function (data) {--%>
-            <%--alert(data.msg);--%>
-            <%--location.reload();--%>
-            <%--},--%>
-            <%--error: function (data) {--%>
-            <%--alert(data.msg);--%>
-            <%--location.reload();--%>
-            <%--}--%>
-            <%--});--%>
-
-            <%--});--%>
+            $(".submit").click(function () {
+                var formData = new FormData(document.getElementById("form"));
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/books/updateBook",
+                    type: "post",
+                    dataType: "json",
+                    async: false,
+                    data: formData,
+                    //将ajax里面请求数据的请求关闭
+                    processData: false,
+                    encType: "multipart/form-data",
+                    //将ajax里面自动设置头给关闭
+                    contentType: false,
+                    success: function (data) {
+                        alert(data.msg);
+                        location.href("/books/findAll");
+                    },
+                    error: function (data) {
+                        alert(data.msg);
+                        location.href("/books/findAll");
+                    }
+                });
+            });
         }
     });
 
@@ -233,11 +239,11 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
-                location.reload();
+                location.href("/books/findAll");
             },
             error: function (data) {
                 alert(data.msg);
-                location.reload();
+                location.href("/books/findAll");
             }
         })
     });

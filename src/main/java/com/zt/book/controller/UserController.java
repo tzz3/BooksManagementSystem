@@ -29,7 +29,6 @@ public class UserController {
     public ModelAndView login(User user, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         User u = userService.login(user);
-
         if (u != null) {//重定向 redirect:
             request.getSession().setAttribute("u", u);
             mav.setViewName("/index.jsp");
@@ -93,4 +92,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/updatePassword")
+    @ResponseBody
+    public Message updatePassword(String id, String pwd,String newpwd) {
+        System.out.println(id + "\n" + pwd + "\n" + newpwd);
+        try {
+            return userService.updatePassword(id, pwd, newpwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message("系统异常，密码修改失败");
+        }
+    }
 }

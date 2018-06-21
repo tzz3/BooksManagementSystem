@@ -25,10 +25,10 @@
 
                 <div class="pwd">
                     <label>密&nbsp;&nbsp;码</label><input type="password" class="text" placeholder="密码"
-                                                        name="userPassword" tabindex="2" required="required"></br>
-                    <input class="submit" type="submit" value="登陆"/> <input
-                        class="reset" type="reset" value="重置"/> </br>
-                    <font color="red">${msg}</font></br>
+                                                        name="userPassword" tabindex="2" required="required"><br>
+                    <input class="submit" type="submit" value="登陆"/>
+                    <input class="reset" type="reset" value="重置"/><br>
+                    <span style="color: red; ">${msg}</span><br>
                 </div>
             </form>
         </div>

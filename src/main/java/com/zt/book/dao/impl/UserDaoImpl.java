@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        String hql = "from User u order by u.id";
+        String hql = "from User u order by u.userName";
         return sessionFactory.getCurrentSession().createQuery(hql, User.class).getResultList();
     }
 

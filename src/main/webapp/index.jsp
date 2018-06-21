@@ -69,7 +69,8 @@
     $("#upadtePasw").click(function () {
         var iframes = document.getElementById("iframes");
         /* 点击访问 获取用户接口 ，成功跳转 成功页面显示 */
-        iframes.src = "updatePasw.jsp";
+        // iframes.src = "updatePasw.jsp";
+        iframes.src = "${pageContext.request.contextPath}/updatePassword.jsp";
     });
     /*--------------------------图书模块--------------------------------------------*/
     $("#bookInfo").click(function () {

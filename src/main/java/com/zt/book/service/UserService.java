@@ -18,4 +18,6 @@ public interface UserService {
     Message addUser(User user);
 
     Message updateUser(User user);
+
+    Message updatePassword(String id, String pwd, String newPwd);
 }

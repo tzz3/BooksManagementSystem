@@ -96,4 +96,22 @@ public class UserServiceImpl implements UserService {
         }
         return msg;
     }
+
+    @Override
+    public Message updatePassword(String id, String pwd, String newPwd) {
+        Message msg = new Message();
+        User u = userDao.findById(id);
+        if (u != null) {
+            if (u.getUserPassword().equals(pwd)) {
+                u.setUserPassword(newPwd);
+                userDao.update(u);
+                msg.setMsg("密码修改成功");
+            } else {
+                msg.setMsg("原密码错误");
+            }
+        } else {
+            msg.setMsg("用户不存在");
+        }
+        return msg;
+    }
 }

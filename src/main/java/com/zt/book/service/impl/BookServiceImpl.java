@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
             book.setKind(kind);
 
             //判断上传文件
-            if (filedata != null) {
+            if (filedata.getSize() > 0) {
                 String src = UpUtils.getSrc(filedata, request);
                 book.setAddress(src);
             } else {
@@ -78,31 +78,27 @@ public class BookServiceImpl implements BookService {
         if (bk != null && !bk.getId().equals(book.getId())) {
             return new Message("书名重复");
         }
-        if (b != null) {
-            if (kind == null) {
-                kind = new Kind();
-                kind.setId(UUID.randomUUID().toString().substring(0, 4));
-                kind.setType(type);
-                kindDao.addKind(kind);
-            }
-            book.setKind(kind);
-
-            //判断上传文件是否为空
-            String src = UpUtils.getSrc(filedata, request);
-            System.out.println(filedata.getSize());
-            if (filedata.getSize() > 0) {
-                book.setAddress(src);
-            }else{
-                book.setAddress(b.getAddress());
-            }
-
-            System.out.println(book.toString());
-
-            bookDao.updateBook(book);
-            return new Message("修改成功");
-        } else {
-            return new Message("图书不存在");
+        if (kind == null) {
+            kind = new Kind();
+            kind.setId(UUID.randomUUID().toString().substring(0, 4));
+            kind.setType(type);
+            kindDao.addKind(kind);
         }
+        book.setKind(kind);
+
+        //判断上传文件是否为空
+        String src = UpUtils.getSrc(filedata, request);
+        System.out.println(filedata.getSize());
+        if (filedata.getSize() > 0) {
+            book.setAddress(src);
+        } else {
+            book.setAddress(b.getAddress());
+        }
+
+        System.out.println(book.toString());
+
+        bookDao.updateBook(book);
+        return new Message("修改成功");
     }
 
     @Override

@@ -3,6 +3,7 @@
 <%@ page import="com.zt.book.pojo.Message" %>
 <%
     List<Book> books = (List<Book>) request.getAttribute("books");
+    // List<Book> books = (List<Book>) request.getSession().getAttribute("books");
     // Message msg = (Message) request.getAttribute("msg");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -117,6 +118,7 @@
         $("#bookAuthor").val("");
         $("#bookSynopsis").val("");
         $(".submit").removeClass("add_submit").removeClass("update_submit");
+        $("#form").attr("action", "#");
     });
 
     /*添加按钮*/
@@ -217,11 +219,11 @@
                     contentType: false,
                     success: function (data) {
                         alert(data.msg);
-                        location.href("/books/findAll");
+                        window.location.href = "${pageContext.request.contextPath}/books/findAll";
                     },
                     error: function (data) {
                         alert(data.msg);
-                        location.href("/books/findAll");
+                        window.location.href = "${pageContext.request.contextPath}/books/findAll";
                     }
                 });
             });
@@ -230,6 +232,7 @@
 
     /*删除按钮*/
     $(".delete").click(function () {
+
         var id = $(this).parents("tr").find("td").eq(0).text().replace(/^\s+|\s+$/g, "");
         $.ajax({
             url: "${pageContext.request.contextPath}/books/deleteBook",
@@ -239,11 +242,11 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
-                location.href("/books/findAll");
+                window.location.href = "${pageContext.request.contextPath}/books/findAll";
             },
             error: function (data) {
                 alert(data.msg);
-                location.href("/books/findAll");
+                window.location.href = "${pageContext.request.contextPath}/books/findAll";
             }
         })
     });

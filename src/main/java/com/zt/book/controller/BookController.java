@@ -30,6 +30,7 @@ public class BookController {
         ModelAndView mav = new ModelAndView();
         List<Book> books = bookService.findAll();
         mav.addObject("books", books);
+        // request.getSession().setAttribute("books", books);
         mav.setViewName("/book.jsp");
         return mav;
     }
@@ -39,8 +40,9 @@ public class BookController {
     public ModelAndView findByLike(String bookName) {
         ModelAndView mav = new ModelAndView();
         List<Book> books = bookService.findByLike(bookName);
-        mav.setViewName("/book.jsp");
         mav.addObject("books", books);
+        mav.setViewName("/book.jsp");
+        // request.getSession().setAttribute("books", books);
         return mav;
     }
 
@@ -51,8 +53,9 @@ public class BookController {
             Message msg = bookService.addBook(book, type, filedata, request);
             mav.addObject("msg", msg);
             List<Book> books = bookService.findAll();
-            mav.addObject("books", books);
             mav.setViewName("/book.jsp");
+            mav.addObject("books", books);
+            // request.getSession().setAttribute("books", books);
             return mav;
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +73,6 @@ public class BookController {
     @ResponseBody
     public Message updateBook(Book book, String type, MultipartFile filedata, HttpServletRequest request) {
         try {
-            System.out.println(book.toString());
             return bookService.updateBook(book, type, filedata, request);
         } catch (Exception e) {
             e.printStackTrace();

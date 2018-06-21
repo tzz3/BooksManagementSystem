@@ -43,4 +43,13 @@ public class ReturnController {
             return new Message("系统异常，还书失败");
         }
     }
+
+    @RequestMapping("/findByLike")
+    public ModelAndView findByLike(String userName) {
+        ModelAndView mav = new ModelAndView();
+        List<Record> records = returnSerivice.findByLike(userName);
+        mav.addObject("records",records);
+        mav.setViewName("/return.jsp");
+        return mav;
+    }
 }

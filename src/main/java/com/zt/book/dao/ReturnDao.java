@@ -10,4 +10,6 @@ public interface ReturnDao {
     Record findById(String id);
 
     void returnBook(Record record);
+
+    List<Record> findByLike(String userName);
 }

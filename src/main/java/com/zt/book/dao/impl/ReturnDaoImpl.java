@@ -35,4 +35,10 @@ public class ReturnDaoImpl implements ReturnDao {
     public void returnBook(Record record) {
         sessionFactory.getCurrentSession().delete(record);
     }
+
+    @Override
+    public List<Record> findByLike(String userName) {
+        String hql = "from Record r where r.userName like :userName";
+        return sessionFactory.getCurrentSession().createQuery(hql, Record.class).setParameter("userName", "%" + userName + "%").getResultList();
+    }
 }

@@ -10,4 +10,6 @@ public interface ReturnService {
     List<Record> findAll();
 
     Message returnBook(String id);
+
+    List<Record> findByLike(String userName);
 }

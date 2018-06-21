@@ -26,12 +26,17 @@ public class ReturnServiceImpl implements ReturnService {
     public Message returnBook(String id) {
         Message msg = new Message();
         Record record = returnDao.findById(id);
-        if (record!=null){
+        if (record != null) {
             returnDao.returnBook(record);
             msg.setMsg("还书完成");
-        }else{
+        } else {
             msg.setMsg("此书已还");
         }
         return msg;
+    }
+
+    @Override
+    public List<Record> findByLike(String userName) {
+        return returnDao.findByLike(userName);
     }
 }

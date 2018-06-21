@@ -35,6 +35,15 @@ public class BookController {
         return mav;
     }
 
+    @RequestMapping("/home")
+    public ModelAndView home(){
+        ModelAndView mav = new ModelAndView();
+        List<Book> books = bookService.findAll();
+        mav.addObject("books", books);
+        mav.setViewName("/home.jsp");
+        return mav;
+    }
+
 
     @RequestMapping("/findByLike")
     public ModelAndView findByLike(String bookName) {

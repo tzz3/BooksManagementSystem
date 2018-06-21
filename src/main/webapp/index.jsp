@@ -46,7 +46,8 @@
     </div>
 </div>
 <div class="book-right">
-    <iframe class="iframes" id="iframes" src="${pageContext.request.contextPath }/home.jsp"></iframe>
+    <%--<iframe class="iframes" id="iframes" src="${pageContext.request.contextPath }/home.jsp"></iframe>--%>
+    <iframe class="iframes" id="iframes" src="${pageContext.request.contextPath }/books/home"></iframe>
 </div>
 
 </body>

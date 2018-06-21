@@ -1,9 +1,11 @@
 package com.zt.book.controller;
 
+import com.zt.book.pojo.Message;
 import com.zt.book.pojo.Record;
 import com.zt.book.service.ReturnService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -28,5 +30,17 @@ public class ReturnController {
         mav.addObject("records", records);
         mav.setViewName("/return.jsp");
         return mav;
+    }
+
+    @RequestMapping("/returnBook")
+    @ResponseBody
+    public Message returnBook(String id) {
+        System.out.println(id);
+        try {
+            return returnSerivice.returnBook(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message("系统异常，还书失败");
+        }
     }
 }

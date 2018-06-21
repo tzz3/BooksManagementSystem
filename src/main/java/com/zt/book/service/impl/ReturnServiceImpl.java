@@ -1,6 +1,7 @@
 package com.zt.book.service.impl;
 
 import com.zt.book.dao.ReturnDao;
+import com.zt.book.pojo.Message;
 import com.zt.book.pojo.Record;
 import com.zt.book.service.ReturnService;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,18 @@ public class ReturnServiceImpl implements ReturnService {
     @Override
     public List<Record> findAll() {
         return returnDao.findAll();
+    }
+
+    @Override
+    public Message returnBook(String id) {
+        Message msg = new Message();
+        Record record = returnDao.findById(id);
+        if (record!=null){
+            returnDao.returnBook(record);
+            msg.setMsg("还书完成");
+        }else{
+            msg.setMsg("此书已还");
+        }
+        return msg;
     }
 }

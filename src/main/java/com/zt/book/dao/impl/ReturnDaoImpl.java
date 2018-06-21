@@ -24,4 +24,15 @@ public class ReturnDaoImpl implements ReturnDao {
         String hql = "from Record r order by r.id";
         return sessionFactory.getCurrentSession().createQuery(hql, Record.class).getResultList();
     }
+
+    @Override
+    public Record findById(String id) {
+        String hql = "from Record r where r.id=:id";
+        return sessionFactory.getCurrentSession().createQuery(hql, Record.class).setParameter("id", id).uniqueResult();
+    }
+
+    @Override
+    public void returnBook(Record record) {
+        sessionFactory.getCurrentSession().delete(record);
+    }
 }

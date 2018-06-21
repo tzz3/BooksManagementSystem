@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ReturnDao {
     List<Record> findAll();
+
+    Record findById(String id);
+
+    void returnBook(Record record);
 }

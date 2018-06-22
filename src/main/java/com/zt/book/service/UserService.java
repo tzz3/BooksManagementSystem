@@ -19,7 +19,7 @@ public interface UserService {
 
     Message updateUser(User user);
 
-    Message updatePassword(String id, String pwd, String newPwd);
+    Message updatePassword(String id, String newPwd);
 
     void addUsers(List<User> users);
 }

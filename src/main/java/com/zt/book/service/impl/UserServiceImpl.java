@@ -4,6 +4,7 @@ import com.zt.book.dao.UserDao;
 import com.zt.book.pojo.Message;
 import com.zt.book.pojo.User;
 import com.zt.book.service.UserService;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
+        Md5Hash md5Hash = new Md5Hash(user.getUserPassword());
+        user.setUserPassword(md5Hash.toString());
         return userDao.login(user.getUserName(), user.getUserPassword());
     }
 
@@ -58,6 +61,8 @@ public class UserServiceImpl implements UserService {
             if (u == null) {
                 String id = UUID.randomUUID().toString().substring(0, 4);
                 user.setId(id);
+                Md5Hash md5Hash = new Md5Hash(user.getUserPassword());
+                user.setUserPassword(md5Hash.toString());
                 userDao.addUser(user);
                 msg.setMsg("用户添加成功");
             } else {
@@ -82,6 +87,9 @@ public class UserServiceImpl implements UserService {
                 } else if (u.getId().equals(user.getId())) {
                     if (user.getUserPassword().equals("")) {
                         user.setUserPassword(u.getUserPassword());
+                    } else {
+                        Md5Hash md5Hash = new Md5Hash(user.getUserPassword());
+                        user.setUserPassword(md5Hash.toString());
                     }
                     userDao.update(user);
                     msg.setMsg("修改成功");
@@ -98,19 +106,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Message updatePassword(String id, String pwd, String newPwd) {
+    public Message updatePassword(String id, String newPwd) {
         Message msg = new Message();
-        User u = userDao.findById(id);
-        if (u != null) {
-            if (u.getUserPassword().equals(pwd)) {
-                u.setUserPassword(newPwd);
+        if (id.equals("")) {
+            msg.setMsg("密码不可为空");
+        } else {
+            User u = userDao.findById(id);
+            if (u != null) {
+                Md5Hash md5Hash = new Md5Hash(newPwd);
+                u.setUserPassword(md5Hash.toString());
                 userDao.update(u);
                 msg.setMsg("密码修改成功,请重新登录");
             } else {
-                msg.setMsg("原密码错误");
+                msg.setMsg("用户不存在");
             }
-        } else {
-            msg.setMsg("用户不存在");
         }
         return msg;
     }
@@ -120,8 +129,9 @@ public class UserServiceImpl implements UserService {
         for (User user : users) {
             String id = UUID.randomUUID().toString().substring(0, 4);
             String p = "111";
+            Md5Hash md5Hash = new Md5Hash(p);
+            user.setUserPassword(md5Hash.toString());
             user.setId(id);
-            user.setUserPassword(p);
             userDao.addUser(user);
         }
     }

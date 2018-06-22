@@ -18,7 +18,8 @@
         </div>
         <div class="box-th">
             <p>用户</p>
-            <input type="text" id="userName" name="userName" placeholder="请输入用户" readonly="readonly"/>
+            <input type="text" id="userName" name="userName" placeholder="请输入用户"/>
+            <%--readonly="readonly"--%>
         </div>
         <div class="box-th">
             <p>借书日期</p>

@@ -244,3 +244,18 @@ html, body {
 .info-pwd {
     text-align: center;
 }
+
+.up {
+    max-width: 30%;
+    height: 60%;
+    background: whitesmoke;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0 0 100px #333333;
+    z-index: 99;
+    border-radius: 4px;
+}

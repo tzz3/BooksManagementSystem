@@ -4,14 +4,25 @@
 <html>
 <head>
     <title>上传</title>
-    <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userlist.css"/>
 </head>
 
 <body>
-<form action="${pageContext.request.contextPath}/books/up" id="form" method="post" enctype="multipart/form-data">
-    <input type="file" name="filedata" id="filedata" value="file"/>
-    <input type="button" class="submit" value="上传"/>
-</form>
+<div class="box-pwd">
+    <form action="${pageContext.request.contextPath}/books/up" id="form" method="post" enctype="multipart/form-data">
+        <div class="pwd"><h1>批量上传</h1></div>
+        <%--<button type="button" class="" id="close"></button>--%>
+        <div class="box-th">
+            <p>选择文件</p>
+            <input type="file" class="upInput" name="filedata" id="filedata" value="file"/>
+        </div>
+
+        <input type="button" class="submit" value="提交"/>
+    </form>
+</div>
+<div class="box-shadow"></div>
+
 </body>
 
 <script>

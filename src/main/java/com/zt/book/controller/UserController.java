@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.aspectj.bridge.MessageWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,10 +106,10 @@ public class UserController {
 
     @RequestMapping("/updatePassword")
     @ResponseBody
-    public Message updatePassword(String id, String pwd, String newpwd) {
-        System.out.println(id + "\n" + pwd + "\n" + newpwd);
+    public Message updatePassword(String id, String newpwd) {
+        System.out.println(id + "\n" + newpwd);
         try {
-            return userService.updatePassword(id, pwd, newpwd);
+            return userService.updatePassword(id, newpwd);
         } catch (Exception e) {
             e.printStackTrace();
             return new Message("系统异常，密码修改失败");
@@ -156,7 +157,7 @@ public class UserController {
             }
             userService.addUsers(users);
 
-            msg.setMsg("success");
+            msg.setMsg("数据导入成功");
             return msg;
         } catch (Exception e) {
             // e.printStackTrace();
@@ -170,7 +171,6 @@ public class UserController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
             int index = error.indexOf("Duplicate entry");
             int end = error.indexOf("for key 'UNIQUE'");
             String m = error.substring(index + 15, end);
@@ -179,5 +179,13 @@ public class UserController {
             // msg.setMsg("系统异常，导入失败！");
             return msg;
         }
+    }
+
+
+    @RequestMapping("/getMd5")
+    @ResponseBody
+    public String getMd5(String pwd) {
+        Md5Hash md5Hash = new Md5Hash(pwd);
+        return md5Hash.toString();
     }
 }

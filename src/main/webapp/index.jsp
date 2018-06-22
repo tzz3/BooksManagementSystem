@@ -43,6 +43,9 @@
         <div class="navi user">
             <button class="btn" id="upadtePasw">修改密码</button>
         </div>
+        <div class="navi user">
+            <button class="btn" id="upUser">批量导入</button>
+        </div>
     </div>
 </div>
 <div class="book-right">
@@ -72,6 +75,11 @@
         /* 点击访问 获取用户接口 ，成功跳转 成功页面显示 */
         // iframes.src = "updatePasw.jsp";
         iframes.src = "${pageContext.request.contextPath}/updatePassword.jsp";
+    });
+
+    $("#upUser").click(function () {
+        var iframes = document.getElementById("iframes");
+        iframes.src = "${pageContext.request.contextPath}/up.jsp";
     });
     /*--------------------------图书模块--------------------------------------------*/
     $("#bookInfo").click(function () {

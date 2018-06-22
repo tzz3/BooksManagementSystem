@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/demo.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/slicebox.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/custom.css"/>
-    <link rel="stylesheet" href="http://dreamsky.github.io/main/blog/common/init.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/init.css">
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
     <style>
         .top-banner {

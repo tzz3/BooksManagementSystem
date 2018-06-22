@@ -68,7 +68,9 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
-                window.top.location = "${pageContext.request.contextPath}/login.jsp";
+                if (data.msg == "密码修改成功,请重新登录") {
+                    window.top.location = "${pageContext.request.contextPath}/login.jsp";
+                }
             }
         })
     });

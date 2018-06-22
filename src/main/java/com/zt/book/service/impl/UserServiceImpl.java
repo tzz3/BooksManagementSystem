@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
             if (u.getUserPassword().equals(pwd)) {
                 u.setUserPassword(newPwd);
                 userDao.update(u);
-                msg.setMsg("密码修改成功");
+                msg.setMsg("密码修改成功,请重新登录");
             } else {
                 msg.setMsg("原密码错误");
             }

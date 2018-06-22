@@ -51,7 +51,7 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
-                window.location.href("${pageContext.request.contextPath}/returns/findAll");
+                window.location.href = "${pageContext.request.contextPath}/returns/findAll";
             }
         });
     });

@@ -66,11 +66,13 @@
             async: false,
             success: function (data) {
                 alert(data.msg);
+                <%--window.location.href = "${pageContext.request.contextPath}/login.jsp";--%>
             }
         })
     });
 
     var password = "${u.userPassword}";
+
     function checkPwd() {
         var pwd = $("#userPassword").val();
         if (pwd != password) {

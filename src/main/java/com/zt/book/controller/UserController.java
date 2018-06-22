@@ -174,8 +174,7 @@ public class UserController {
             int index = error.indexOf("Duplicate entry");
             int end = error.indexOf("for key 'UNIQUE'");
             String m = error.substring(index + 15, end);
-            System.out.println(index + "  " + end);
-            System.out.println("M:" + m);
+            System.out.println("User:" + m);
             msg.setMsg(m + " 用户名重复");
             // msg.setMsg("系统异常，导入失败！");
             return msg;

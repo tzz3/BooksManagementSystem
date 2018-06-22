@@ -17,7 +17,7 @@
 <div class="box-pwd">
     <form action="" id="form" method="post">
         <div class="pwd">修改密码</div>
-        <button type="button" class="close-pwd" id="close">X</button>
+        <%--<button type="button" class="" id="close"></button>--%>
 
         <div class="box-th">
             <p>用户</p>
@@ -26,7 +26,7 @@
 
         <div class="box-th">
             <p>原密码</p>
-            <input type="password" name="userPassword" id="userPassword" class="passWord"/>
+            <input type="password" name="userPassword" id="userPassword" class="passWord" onblur="checkPwd()"/>
         </div>
 
         <div class="box-th">
@@ -52,6 +52,8 @@
 
     $("#userName").val("${u.userName}");
     var id = "${u.id}";
+
+
     $(".submit").click(function (e) {
         e.preventDefault();
         var pwd = $("#userPassword").val();
@@ -67,6 +69,20 @@
             }
         })
     });
+
+    var password = "${u.userPassword}";
+    function checkPwd() {
+        var pwd = $("#userPassword").val();
+        if (pwd != password) {
+            $("#info-pwd").text("原密码错误");
+            $("#npwd").attr("disabled", true);
+            $("#rnpwd").attr("disabled", true);
+        } else {
+            $("#info-pwd").text("");
+            $("#npwd").attr("disabled", false);
+            $("#rnpwd").attr("disabled", false);
+        }
+    }
 
 
     function check() {

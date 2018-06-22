@@ -14,7 +14,7 @@
     <!--左边标题模块-->
     <div class="logoDiv">
         <img src="${pageContext.request.contextPath }/img/logo.png" class="logoImg"/>
-        <p class="logoTitle">图书管理</p>
+        <p class="logoTitle" onclick="home()" style="cursor: pointer">图书管理</p>
     </div>
     <!--用户模块-->
     <div class="user_name">
@@ -98,6 +98,12 @@
         /* 点击访问 获取用户接口 ，成功跳转 成功页面显示 */
         iframes.src = "${pageContext.request.contextPath}/returns/findAll";
     });
+
+    function home() {
+        var iframes = document.getElementById("iframes");
+        /* 点击访问 获取用户接口 ，成功跳转 成功页面显示 */
+        iframes.src = "${pageContext.request.contextPath}/books/home";
+    }
 </script>
 
 </html>

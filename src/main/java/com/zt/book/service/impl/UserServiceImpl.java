@@ -114,4 +114,15 @@ public class UserServiceImpl implements UserService {
         }
         return msg;
     }
+
+    @Override
+    public void addUsers(List<User> users) {
+        for (User user : users) {
+            String id = UUID.randomUUID().toString().substring(0, 4);
+            String p = "111";
+            user.setId(id);
+            user.setUserPassword(p);
+            userDao.addUser(user);
+        }
+    }
 }

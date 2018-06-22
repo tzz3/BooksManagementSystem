@@ -12,6 +12,7 @@ html, body {
 .title {
     background: #e3e8ee;
     color: #646987;
+    /*color: rgba(169, 169, 169, 0.25);*/
     padding: 10px 20px;
 }
 
@@ -237,5 +238,9 @@ html, body {
 }
 
 .pwd {
+    text-align: center;
+}
+
+.info-pwd {
     text-align: center;
 }

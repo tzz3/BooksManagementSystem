@@ -67,6 +67,7 @@
             success: function (data) {
                 alert(data.msg);
                 <%--window.location.href = "${pageContext.request.contextPath}/login.jsp";--%>
+                window.top.location = "${pageContext.request.contextPath}/login.jsp";
             }
         })
     });
